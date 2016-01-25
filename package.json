@@ -1,0 +1,31 @@
+{
+  "name": "react-free-scrollbar",
+  "version": "1.0.0",
+  "description": "A React component that creates custom scrollbars in scroll view",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "babel src/index.jsx -u -o dist/index.js --stage 1 --presets react"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fuermosi777/react-free-scrollbar.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Hao Liu <liuhao1990@gmail.com> (http://liuhao.im)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fuermosi777/react-free-scrollbar/issues"
+  },
+  "homepage": "https://github.com/fuermosi777/react-free-scrollbar#readme",
+  "peerDependencies": {
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.4.5",
+    "babel-preset-react": "^6.3.13"
+  }
+}
