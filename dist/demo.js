@@ -165,6 +165,20 @@
 	                        null,
 	                        Text
 	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'h2',
+	                    null,
+	                    'Hide handler completely'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'slack' },
+	                    _react2.default.createElement(
+	                        _index2.default,
+	                        { hideHandler: true },
+	                        Text
+	                    )
 	                )
 	            )
 	        );
@@ -19809,7 +19823,8 @@
 
 	    getDefaultProps() {
 	        return {
-	            autoHide: false
+	            autoHide: false,
+	            hideHandler: false
 	        };
 	    },
 
@@ -19847,10 +19862,10 @@
 	        var handlerStyles = Object.assign(dynamicStyles, FreeScrollbarHandlerStyles);
 	        return React.createElement('div', { className: 'FreeScrollbar',
 	            style: FreeScrollbarStyles }, React.createElement('div', { className: 'FreeScrollbar-scrollbar',
-	            style: FreeScrollbarScrollbarStyles }, !this.state.disableScroll ? React.createElement('div', { className: "FreeScrollbar-handler " + (this.state.handlerHide ? 'hide' : ''),
+	            style: FreeScrollbarScrollbarStyles }, this.state.disableScroll || this.props.hideHandler ? '' : React.createElement('div', { className: "FreeScrollbar-handler " + (this.state.handlerHide ? 'hide' : ''),
 	            onMouseDown: this.handleHandlerMouseDown,
 	            style: handlerStyles,
-	            ref: 'handler' }) : ''), React.createElement('div', { className: 'FreeScrollbar-scroller',
+	            ref: 'handler' })), React.createElement('div', { className: 'FreeScrollbar-scroller',
 	            onScroll: this.handleScroll,
 	            ref: 'scroller',
 	            style: FreeScrollbarScrollerStyles }, this.props.children));

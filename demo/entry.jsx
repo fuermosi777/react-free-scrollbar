@@ -43,6 +43,12 @@ let Root = React.createClass({
                             {Text}
                         </FreeScrollBar>
                     </div>
+                    <h2>Hide handler completely</h2>
+                    <div className="slack">
+                        <FreeScrollBar hideHandler={true}>
+                            {Text}
+                        </FreeScrollBar>
+                    </div>
                 </div>
             </div>
         );

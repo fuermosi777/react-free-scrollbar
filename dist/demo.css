@@ -151,15 +151,7 @@ li {
   font-size: 12px;
   margin-bottom: 20px;
 }
-.slack .FreeScrollbar {
-  right: 4px;
-}
-.slack .FreeScrollbar .FreeScrollbar-scrollbar {
-  width: 8px;
-  background: #F3F3F3;
-}
 .slack .FreeScrollbar .FreeScrollbar-handler {
-  background-color: #D9D9DE;
   width: 12px;
   left: -2px;
   border-radius: 6px;

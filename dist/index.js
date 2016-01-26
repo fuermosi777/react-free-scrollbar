@@ -35,7 +35,8 @@ module.exports = React.createClass({
 
     getDefaultProps() {
         return {
-            autoHide: false
+            autoHide: false,
+            hideHandler: false
         };
     },
 
@@ -79,10 +80,10 @@ module.exports = React.createClass({
                 'div',
                 { className: 'FreeScrollbar-scrollbar',
                     style: FreeScrollbarScrollbarStyles },
-                !this.state.disableScroll ? React.createElement('div', { className: "FreeScrollbar-handler " + (this.state.handlerHide ? 'hide' : ''),
+                this.state.disableScroll || this.props.hideHandler ? '' : React.createElement('div', { className: "FreeScrollbar-handler " + (this.state.handlerHide ? 'hide' : ''),
                     onMouseDown: this.handleHandlerMouseDown,
                     style: handlerStyles,
-                    ref: 'handler' }) : ''
+                    ref: 'handler' })
             ),
             React.createElement(
                 'div',
