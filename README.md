@@ -4,7 +4,7 @@
 
 A highly customizable react component that creates custom scrollbar with the scrolling boxes for web app.
 
-Visit [http://fuermosi777.github.io/react-free-scrollbar/](http://fuermosi777.github.io/react-free-scrollbar/) to see demo.
+Visit [http://fuermosi777.github.io/react-free-scrollbar/](http://fuermosi777.github.io/react-free-scrollbar/) to see [demo](http://fuermosi777.github.io/react-free-scrollbar/).
 
 ## Install
 

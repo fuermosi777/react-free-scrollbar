@@ -75,13 +75,13 @@ module.exports = React.createClass({
         return (
             <div className="FreeScrollbar" 
                 style={FreeScrollbarStyles}>
-                <div className="FreeScrollbar-scrollbar" 
+                {this.props.hideHandler ? '' : <div className="FreeScrollbar-scrollbar" 
                     style={FreeScrollbarScrollbarStyles}>
-                    {(this.state.disableScroll || this.props.hideHandler) ? '' : <div className={"FreeScrollbar-handler " + (this.state.handlerHide ? 'hide' : '')} 
+                    {this.state.disableScroll ? '' : <div className={"FreeScrollbar-handler " + (this.state.handlerHide ? 'hide' : '')} 
                         onMouseDown={this.handleHandlerMouseDown} 
                         style={handlerStyles}
                         ref="handler"/>}
-                </div>
+                </div>}
                 <div className="FreeScrollbar-scroller" 
                     onScroll={this.handleScroll} 
                     ref="scroller" 
