@@ -151,6 +151,20 @@
 	                        null,
 	                        Text
 	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'h2',
+	                    null,
+	                    'Slack'
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'slack' },
+	                    _react2.default.createElement(
+	                        _index2.default,
+	                        null,
+	                        Text
+	                    )
 	                )
 	            )
 	        );
@@ -19802,7 +19816,7 @@
 	    getInitialState() {
 	        return {
 	            handlerScrollTop: 0,
-	            handlerHide: false,
+	            handlerHide: this.props.autoHide,
 	            height: 0,
 	            scrollHeight: 0,
 	            disableScroll: false

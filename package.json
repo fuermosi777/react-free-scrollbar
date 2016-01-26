@@ -1,10 +1,9 @@
 {
   "name": "react-free-scrollbar",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A React component that creates custom scrollbars in scroll view",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --config webpack.config.js --inline --colors --progress",
     "dist": "babel src/index.jsx -u -o dist/index.js --stage 1 --presets react"
   },

@@ -42,7 +42,7 @@ module.exports = React.createClass({
     getInitialState() {
         return {
             handlerScrollTop: 0,
-            handlerHide: false,
+            handlerHide: this.props.autoHide,
             height: 0,
             scrollHeight: 0,
             disableScroll: false

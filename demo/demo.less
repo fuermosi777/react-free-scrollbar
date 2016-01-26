@@ -145,3 +145,38 @@ li {
         }
     }
 }
+.slack {
+    width: 100%;
+    height: 220px;
+    background: white;
+    font-color: #000;
+    border: 1px solid #E4E9EB;
+    box-sizing: 0 1px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+    font-size: 12px;
+    p {
+        color: #97989C;
+        padding: 15px;
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+    .FreeScrollbar {
+        right: 4px;
+        .FreeScrollbar-scrollbar {
+            width: 8px;
+            background: #F3F3F3;
+        }
+        .FreeScrollbar-handler {
+            background-color: #D9D9DE;
+            width: 12px;
+            left: -2px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+            border: 2px solid white;
+            &:active,
+            &:focus {
+                cursor: default;
+            }
+        }
+    }
+}

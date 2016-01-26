@@ -37,6 +37,12 @@ let Root = React.createClass({
                             {Text}
                         </FreeScrollBar>
                     </div>
+                    <h2>Slack</h2>
+                    <div className="slack">
+                        <FreeScrollBar>
+                            {Text}
+                        </FreeScrollBar>
+                    </div>
                 </div>
             </div>
         );

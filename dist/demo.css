@@ -135,3 +135,39 @@ li {
 .custom-color .FreeScrollbar .FreeScrollbar-handler:focus {
   cursor: default;
 }
+.slack {
+  width: 100%;
+  height: 220px;
+  background: white;
+  font-color: #000;
+  border: 1px solid #E4E9EB;
+  box-sizing: 0 1px 1px rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  font-size: 12px;
+}
+.slack p {
+  color: #97989C;
+  padding: 15px;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+.slack .FreeScrollbar {
+  right: 4px;
+}
+.slack .FreeScrollbar .FreeScrollbar-scrollbar {
+  width: 8px;
+  background: #F3F3F3;
+}
+.slack .FreeScrollbar .FreeScrollbar-handler {
+  background-color: #D9D9DE;
+  width: 12px;
+  left: -2px;
+  border-radius: 6px;
+  -webkit-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+  border: 2px solid white;
+}
+.slack .FreeScrollbar .FreeScrollbar-handler:active,
+.slack .FreeScrollbar .FreeScrollbar-handler:focus {
+  cursor: default;
+}
