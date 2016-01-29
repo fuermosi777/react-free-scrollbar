@@ -14,7 +14,7 @@ Visit [http://fuermosi777.github.io/react-free-scrollbar/](http://fuermosi777.gi
 
 ### Step 1: JSX
 
-    import FreeScrollBar from '../dist/index.js';
+    import FreeScrollBar from 'react-free-scrollbar';
 
     // must have a outter container with both width and height
     <div style={{width: '300px', height: '100px'}}>
