@@ -20,14 +20,14 @@ var FreeScrollbarHandlerStyles = {
 };
 
 var FreeScrollbarScrollerStyles = {
-    overflowY: "auto",
-    height: "100%",
+    overflow: "auto",
     position: "absolute",
     top: "0",
     left: "0",
-    bottom: "0",
+    bottom: "-20px",
     right: "-20px",
-    paddingRight: "20px"
+    paddingRight: "20px",
+    paddingBottom: "20px"
 };
 
 module.exports = React.createClass({
