@@ -4,7 +4,8 @@
   "description": "A React component that creates custom scrollbars in scroll view",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "webpack --config webpack.config.js --inline --colors --progress",
+    "demo-dev": "webpack-dev-server --config webpack.config.dev.js --hot --inline --colors --progress",
+    "demo-build": "webpack  --config webpack.config.prod.js --hot --inline --colors --progress",
     "dist": "babel src/index.jsx -u -o dist/index.js --stage 1 --presets react"
   },
   "repository": {
@@ -37,6 +38,7 @@
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
     "react": "^0.14.6",
+    "react-hot-loader": "^1.3.0",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1"

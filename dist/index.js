@@ -138,7 +138,6 @@ module.exports = React.createClass({
         var handler = ReactDOM.findDOMNode(this.refs.handler);
         var handlerOffsetTop = handler.getBoundingClientRect().top;
         this.handlerPositionTop = e.pageY + (window.scrollY || document.documentElement.scrollTop) - handlerOffsetTop;
-        console.log(e.pageY, handlerOffsetTop);
     },
 
     handleHandlerMouseMove(e) {

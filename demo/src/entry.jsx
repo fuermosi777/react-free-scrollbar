@@ -1,6 +1,6 @@
 import React from 'react';  
 import ReactDOM from 'react-dom';
-import FreeScrollBar from '../dist/index.js';
+import FreeScrollBar from '../../src/index.jsx';
 import Styles from './demo.less';
 
 let things = ['Clean the room', 'Take out the ice-cream', 'Do the homework', 'Feed the cat', 'Clean the car', 'Go to dinner', 'Clean the cups', 'Throw a party', 'Repeat things above', 'Think about the trip', 'Make up a list', 'Go out with friends', 'Kick neighbor\'s butt'];
@@ -42,22 +42,12 @@ let Root = React.createClass({
                             {Text}
                         </FreeScrollBar>
                     </div>
-                    <h3>Custom color</h3>
-                    <div className="custom-color">
+                    <h3>Horizontal</h3>
+                    <div className="horizontal">
                         <FreeScrollBar>
+                            <div className="inner">
                             {Text}
-                        </FreeScrollBar>
-                    </div>
-                    <h3>Slack</h3>
-                    <div className="slack">
-                        <FreeScrollBar>
-                            {Text}
-                        </FreeScrollBar>
-                    </div>
-                    <h3>Hide handler completely</h3>
-                    <div className="hide-completely">
-                        <FreeScrollBar hideHandler={true}>
-                            {Text}
+                            </div>
                         </FreeScrollBar>
                     </div>
                 </div>

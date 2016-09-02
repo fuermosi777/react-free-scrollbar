@@ -82,6 +82,12 @@ Visit [http://fuermosi777.github.io/react-free-scrollbar/](http://fuermosi777.gi
 
 For more examples, go to [http://fuermosi777.github.io/react-free-scrollbar/](http://fuermosi777.github.io/react-free-scrollbar/).
 
+## Develop
+
+`$ npm run demo-dev`
+
+Go to `http://localhost:8080/demo/dev/`.
+
 ## License
 
 MIT &copy; [Hao Liu](http://liuhao.im)
