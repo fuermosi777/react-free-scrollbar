@@ -30,24 +30,16 @@ let Root = React.createClass({
                         <code>$ npm install --save-dev react-free-scrollbar</code>
                     </pre>
                     <h2>Examples</h2>
-                    <h3>Default</h3>
-                    <div className="default">
-                        <FreeScrollBar>
-                            {List}
+                    <h3>Small inner box</h3>
+                    <div className="small">
+                        <FreeScrollBar className="smaple1" style={{width: '100%', height: '100%'}}>
+                            <div className="inner"></div>
                         </FreeScrollBar>
                     </div>
-                    <h3>Auto-hide</h3>
-                    <div className="auto-hide">
-                        <FreeScrollBar autoHide={true}>
-                            {Text}
-                        </FreeScrollBar>
-                    </div>
-                    <h3>Horizontal</h3>
-                    <div className="horizontal">
+                    <h3>Big inner box</h3>
+                    <div className="big">
                         <FreeScrollBar>
-                            <div className="inner">
-                            {Text}
-                            </div>
+                            <div className="inner"></div>
                         </FreeScrollBar>
                     </div>
                 </div>

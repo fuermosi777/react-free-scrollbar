@@ -1,33 +1,47 @@
 var React = require('react');
-var ReactDOM = require('react-dom');
+var findDOMNode = require('react-dom').findDOMNode;
 
-var FreeScrollbarStyles = {
-    overflow: 'hidden',
-    height: '100%',
-    position: 'relative'
-};
+const styles = {
+    main: {
+        overflow: 'hidden',
+        position: 'relative',
+        boxSizing: 'border-box'
+    },
+    container: {
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        right: '-15px',
+        bottom: '-15px',
+        overflow: 'scroll',
+        boxSizing: 'border-box'
+    },
+    track: {
+        vertical: {
+            position: 'absolute',
+            left: '0',
+            right: '0',
+            height: '10px',
+            bottom: '0',
+            backgroundColor: 'black'
+        },
+        horizontal: {
+            position: 'absolute',
+            top: '0',
+            right: '0',
+            width: '10px',
+            bottom: '0',
+            backgroundColor: 'black'
+        }
+    },
+    handler: {
+        vertical: {
 
-var FreeScrollbarScrollbarStyles = {
-    position: "absolute",
-    top: "0",
-    right: "0",
-    height: "100%"
-};
-
-var FreeScrollbarHandlerStyles = {
-    position: "absolute",
-    zIndex: "1"
-};
-
-var FreeScrollbarScrollerStyles = {
-    overflow: "auto",
-    position: "absolute",
-    top: "0",
-    left: "0",
-    bottom: "-20px",
-    right: "-20px",
-    paddingRight: "20px",
-    paddingBottom: "20px"
+        },
+        horizontal: {
+            
+        }
+    }
 };
 
 module.exports = React.createClass({
@@ -35,136 +49,49 @@ module.exports = React.createClass({
 
     getDefaultProps() {
         return {
-            autoHide: false,
-            hideHandler: false
-        };
+            className: '',
+            style: {
+                width: '100%',
+                height: '100%'
+            }
+        }
     },
 
     getInitialState() {
         return {
-            handlerScrollTop: 0,
-            handlerHide: this.props.autoHide,
-            height: 0,
-            scrollHeight: 0,
-            disableScroll: false
-        };
+            showVeriticalTrack: false,
+            showHorizontalTrack: false
+        }
     },
-
-    handlerHider: null,
-    scrollHandler: null,
-    handlerPositionTop: 0, // the distance between the top of the handler to the mouse
-    lastPos: 0,
 
     componentDidMount() {
-        window.addEventListener('resize', this.handleResize);
-        document.addEventListener('mousemove', this.handleHandlerMouseMove);
-        document.addEventListener('mouseup', this.handleHandlerMouseUp);
-        this.updateHeight();
+        this.updateTrackVisibilities();        
     },
 
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.handleResize);  
-        document.removeEventListener('mousemove', this.handleHandlerMouseMove);
-        document.removeEventListener('mouseup', this.handleHandlerMouseUp);
+    componentDidUpdate() {
+        // this.updateTrackVisibilities();  
     },
+
     render() {
-        // Mutating style is deprecated
-        // Convert to immutable way
-        var dynamicStyles = Object.assign({}, {height: `${this.state.height / this.state.scrollHeight * 100}%`, top: this.state.handlerScrollTop.toString() + '%'});
-        var handlerStyles = Object.assign(dynamicStyles, FreeScrollbarHandlerStyles);
+        console.log(this.state);
         return (
-            <div className="FreeScrollbar" 
-                style={FreeScrollbarStyles}>
-                {this.props.hideHandler ? '' : <div className="FreeScrollbar-scrollbar" 
-                    style={FreeScrollbarScrollbarStyles}>
-                    {this.state.disableScroll ? '' : <div className={"FreeScrollbar-handler " + (this.state.handlerHide ? 'hide' : '')} 
-                        onMouseDown={this.handleHandlerMouseDown} 
-                        style={handlerStyles}
-                        ref="handler"/>}
-                </div>}
-                <div className="FreeScrollbar-scroller" 
-                    onScroll={this.handleScroll} 
-                    ref="scroller" 
-                    style={FreeScrollbarScrollerStyles}>
+            <div className={`FreeScrollbar ${this.props.className}`} style={Object.assign(this.props.style, styles.main)}>
+                <div className="FreeScrollbar-container" style={styles.container} ref="container">
                     {this.props.children}
+                    {this.state.showVeriticalTrack ? <div className="FreeScrollbar-vertical-track" style={styles.track.vertical}></div> : null}
+                    {this.state.showHorizontalTrack ? <div className="FreeScrollbar-horizontal-track" style={styles.track.horizontal}></div> : null}
                 </div>
             </div>
-        );
+        )
     },
 
-    handleScroll(e) {
-        clearTimeout(this.handlerHider);
-        var pos = e.target.scrollTop / (e.target.scrollHeight- this.state.height) * (1 - this.state.height / this.state.scrollHeight);
+    updateTrackVisibilities() {
+        var el = findDOMNode(this.refs.container);
         this.setState({
-            handlerScrollTop: pos * 100,
-            handlerHide: false
-        }, () => {
-            this.handlerHider = setTimeout(() => {
-                this.setState({handlerHide: this.props.autoHide});
-            }, 1500);
-        });
-        if (pos < 0.2 && pos < this.lastPos && this.props.onApproachingTop) {
-            this.props.onApproachingTop();
-        }
-        if (pos > 0.6 && pos > this.lastPos && this.props.onApproachingBottom) {
-            this.props.onApproachingBottom();
-        }
-        if (this.props.onScrolling) {
-            this.props.onScrolling(pos, e.target.scrollTop);
-        }
-        this.lastPos = pos;
-    },
-
-    handleResize() {
-        this.updateHeight();
-    },
-
-    componentWillReceiveProps(nextProps) {
-        // when updating children
-        // should remeasure the heights to decide
-        // whether to disable the scroll or not
-        this.updateHeight();
-    },
-
-    handleHandlerMouseDown(e) {
-        this.scrollHandler = e.target;
-        clearTimeout(this.handlerHider);
-        this.setState({handlerHide: false});
-
-        var handler = ReactDOM.findDOMNode(this.refs.handler);
-        var handlerOffsetTop = handler.getBoundingClientRect().top;
-        this.handlerPositionTop = e.pageY + (window.scrollY || document.documentElement.scrollTop) - handlerOffsetTop;
-    },
-
-    handleHandlerMouseMove(e) {
-        var scroller = ReactDOM.findDOMNode(this.refs.scroller);
-        var scrollerOffsetTop = scroller.getBoundingClientRect().top;
-        
-        if (this.scrollHandler) {
-            var pos = (e.pageY - scrollerOffsetTop) / this.state.height;
-
-            var resTop = pos * this.state.scrollHeight - this.handlerPositionTop;
-            //resTop = (resTop < 0 ? 0 : ((pos > this.state.height * (1 - this.state.height / this.state.scrollHeight)) ? (this.state.height * (1 - this.state.height / this.state.scrollHeight)) : resTop));
-            scroller.scrollTop = resTop;
-        }
-    },
-
-    handleHandlerMouseUp(e) {
-        this.scrollHandler = null;
-        this.handlerPositionTop = 0;
-        clearTimeout(this.handlerHider);
-        this.handlerHider = setTimeout(() => {
-            this.setState({handlerHide: this.props.autoHide});
-        }, 1500);
-    },
-
-    updateHeight() {
-        var height = ReactDOM.findDOMNode(this).offsetHeight;
-        var scrollHeight = ReactDOM.findDOMNode(this.refs.scroller).scrollHeight;
-        this.setState({
-            height: height,
-            scrollHeight: scrollHeight,
-            disableScroll: (scrollHeight <= height)
-        });
+            showVeriticalTrack: el.scrollHeight > el.offsetHeight,
+            showHorizontalTrack: el.scrollWidth > el.offsetWidth
+        })
     }
+
+
 });
