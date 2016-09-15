@@ -13,7 +13,7 @@ module.exports = {
     module: {
         loaders: [{
             test: /\.jsx$/,
-            loaders: ['react-hot', 'babel?presets[]=es2015,presets[]=react'],
+            loaders: ['react-hot', 'babel'],
             exclude: /node_modules/
         }, {
             test: /\.js$/,
@@ -21,10 +21,10 @@ module.exports = {
             loader: 'babel'
         }, {
             test: /\.less$/,
-            loader: 'style!css-loader!autoprefixer!less-loader'
+            loader: 'style!css-loader!less-loader'
         }, {
             test: /\.(css)$/,
-            loader: 'style!css-loader!autoprefixer'
+            loader: 'style!css-loader'
         }, {
             test: /\.(png|jpg|jpeg|svg)$/,
             loader: 'file'

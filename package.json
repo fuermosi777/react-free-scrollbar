@@ -1,6 +1,6 @@
 {
   "name": "react-free-scrollbar",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A React component that creates custom scrollbars in scroll view",
   "main": "dist/index.js",
   "scripts": {
@@ -22,22 +22,24 @@
   },
   "homepage": "https://github.com/fuermosi777/react-free-scrollbar#readme",
   "peerDependencies": {
-    "react": "^0.14.0",
-    "react-dom": "^0.14.0"
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-react": "^6.3.13",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
-    "react": "^0.14.6",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
     "react-hot-loader": "^1.3.0",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.12",
