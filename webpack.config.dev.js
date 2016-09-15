@@ -4,38 +4,35 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     entry: [
-        './demo/entry.jsx'
+        'webpack/hot/only-dev-server',
+        './demo/src/entry.jsx'
     ],
     output: {
-        path: __dirname + '/dist',
         publicPath: 'http://localhost:8080/',
         filename: 'demo.js'
     },
     module: {
         loaders: [{
             test: /\.jsx$/,
-            loader: 'babel',
-            exclude: /node_modules/,
-            query: {
-                presets: ['es2015', 'react']
-            }
+            loaders: ['react-hot', 'babel'],
+            exclude: /node_modules/
         }, {
             test: /\.js$/,
             exclude: /node_modules/,
             loader: 'babel'
         }, {
             test: /\.less$/,
-            loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer!less-loader')
+            loader: 'style!css-loader!less-loader'
         }, {
             test: /\.(css)$/,
-            loader: ExtractTextPlugin.extract('style', 'css-loader!autoprefixer')
+            loader: 'style!css-loader'
         }, {
             test: /\.(png|jpg|jpeg|svg)$/,
             loader: 'file'
         }]
     },
     plugins: [
-        new webpack.NoErrorsPlugin(),
-        new ExtractTextPlugin("demo.css")
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
     ]
 };
