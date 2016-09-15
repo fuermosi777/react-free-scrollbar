@@ -1,2 +1,2 @@
 #!/bin/sh
-git subtree push --prefix dist/prod origin gh-pages
+git subtree push --prefix site origin gh-pages
