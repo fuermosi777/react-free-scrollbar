@@ -1,7 +1,7 @@
 {
   "name": "react-free-scrollbar",
   "version": "0.2.0",
-  "description": "A React component that creates custom scrollbars in scroll view",
+  "description": "A react module for creating customizable scroll area",
   "main": "dist/index.js",
   "scripts": {
     "demo-dev": "webpack-dev-server --config webpack.config.dev.js --hot --inline --colors --progress",
