@@ -66,7 +66,7 @@ let Root = React.createClass({
                         <div className="col-md-6">
                             <h4>Auto hide</h4>
                             <div className="auto-hide">
-                                <FreeScrollBar className="example" autohide={true} fixed={true}>
+                                <FreeScrollBar className="example" autohide={true} fixed={true} start={'bottom right'}>
                                     <div className="inner">{Text}</div>
                                 </FreeScrollBar>
                             </div>

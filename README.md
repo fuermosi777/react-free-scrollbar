@@ -64,6 +64,12 @@ The time length of the handler disappears. Default: 2000
 
 The width of the vertical handler or the height of the horizontal handler. Default: 10px
 
+### `start: String`
+
+The starting position of the scroll area. Default: "top left".
+
+Options: "bottom", "bottom right", "top right", "right"
+
 ## Customization
 
 Adding a custom className to the component will give you power to customize the scrollbar's track and handler. Here is an example:
