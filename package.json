@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "demo-dev": "webpack-dev-server --config webpack.config.dev.js --hot --inline --colors --progress",
-    "demo-build": "webpack  --config webpack.config.prod.js --hot --inline --colors --progress",
-    "dist": "babel src/index.jsx -u -o site/index.js --stage 1 --presets react"
+    "demo-build": "webpack --config webpack.config.prod.js --hot --inline --colors --progress",
+    "dist": "babel src/index.jsx -u -o dist/index.js --stage 1 --presets react"
   },
   "repository": {
     "type": "git",

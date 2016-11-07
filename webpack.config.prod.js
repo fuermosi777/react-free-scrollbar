@@ -6,9 +6,9 @@ module.exports = {
         './demo/src/entry.jsx'
     ],
     output: {
-        path: __dirname + '/demo/prod/',
-        publicPath: 'http://localhost:8080/',
-        filename: 'demo.js'
+        path: __dirname + '/site',
+        // publicPath: 'http://localhost:8080/',
+        filename: 'index.js'
     },
     module: {
         loaders: [{

@@ -90,7 +90,8 @@ module.exports = React.createClass({
             fixed: false,
             autohide: false,
             timeout: 2000,
-            tracksize: '10px'
+            tracksize: '10px',
+            start: 'top left'
         };
     },
 
@@ -125,6 +126,13 @@ module.exports = React.createClass({
         this.collectInfo();
         this.updateTrackVisibilities();
         this.handlerContainerScroll();
+
+        if (this.props.start.includes('bottom')) {
+            this.el.scrollTop = this.el.scrollHeight;
+        }
+        if (this.props.start.includes('right')) {
+            this.el.scrollLeft = this.el.scrollWidth;
+        }
     },
     componentWillUnmount: function componentWillUnmount() {
         document.removeEventListener('mousemove', this.handleHandlerMouseMove);
