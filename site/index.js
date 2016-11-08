@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c828347c0b967fdb09bb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "19aa799e26772e227bea"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -723,7 +723,7 @@
 	                            { className: 'quick-start' },
 	                            _react2.default.createElement(
 	                                _index2.default,
-	                                null,
+	                                { start: "top" },
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'inner' },
@@ -751,7 +751,7 @@
 	                            { className: 'horizontal' },
 	                            _react2.default.createElement(
 	                                _index2.default,
-	                                null,
+	                                { start: 'bottom right' },
 	                                _react2.default.createElement('img', { src: 'http://designmodo.github.io/Flat-UI/docs/assets/img/example-image.jpg', className: 'img-rounded' })
 	                            )
 	                        )
@@ -794,7 +794,7 @@
 	                        _react2.default.createElement(
 	                            'h4',
 	                            null,
-	                            'Auto hide'
+	                            'Auto hide, and the starting position is on the "bottom right".'
 	                        ),
 	                        _react2.default.createElement(
 	                            'div',
@@ -22760,7 +22760,17 @@
 	    componentDidMount: function componentDidMount() {
 	        document.addEventListener('mousemove', this.handleHandlerMouseMove);
 	        document.addEventListener('mouseup', this.handleHandlerMouseUp);
-
+	        window.onload = this.handleWindowLoad;
+	    },
+	    componentWillUnmount: function componentWillUnmount() {
+	        document.removeEventListener('mousemove', this.handleHandlerMouseMove);
+	        document.removeEventListener('mouseup', this.handleHandlerMouseUp);
+	        window.removeEventListener('load', this.handleWindowLoad);
+	    },
+	    componentDidUpdate: function componentDidUpdate() {
+	        this.updateTrackVisibilities();
+	    },
+	    handleWindowLoad: function handleWindowLoad() {
 	        this.collectInfo();
 	        this.updateTrackVisibilities();
 	        this.handlerContainerScroll();
@@ -22771,13 +22781,6 @@
 	        if (this.props.start.includes('right')) {
 	            this.el.scrollLeft = this.el.scrollWidth;
 	        }
-	    },
-	    componentWillUnmount: function componentWillUnmount() {
-	        document.removeEventListener('mousemove', this.handleHandlerMouseMove);
-	        document.removeEventListener('mouseup', this.handleHandlerMouseUp);
-	    },
-	    componentDidUpdate: function componentDidUpdate() {
-	        this.updateTrackVisibilities();
 	    },
 	    collectInfo: function collectInfo() {
 	        this.el = findDOMNode(this.refs.container);
@@ -22851,6 +22854,7 @@
 	        var scrollHeight = el.scrollHeight,
 	            scrollWidth = el.scrollWidth;
 	        if (scrollHeight === this.lastScrollHeight && scrollWidth === this.lastScrollWidth) return;
+	        console.log(scrollHeight, this.offsetHeight);
 	        this.setState({
 	            showVeriticalTrack: scrollHeight > this.offsetHeight,
 	            showHorizontalTrack: scrollWidth > this.offsetWidth

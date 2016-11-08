@@ -48,7 +48,7 @@ let Root = React.createClass({
                         <div className="col-md-6">
                             <h4>Horizontal</h4>
                             <div className="horizontal">
-                            <FreeScrollBar>
+                            <FreeScrollBar start={'bottom right'}>
                                 <img src="http://designmodo.github.io/Flat-UI/docs/assets/img/example-image.jpg" className="img-rounded"/>
                             </FreeScrollBar>
                         </div>

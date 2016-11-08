@@ -122,7 +122,17 @@ module.exports = React.createClass({
     componentDidMount: function componentDidMount() {
         document.addEventListener('mousemove', this.handleHandlerMouseMove);
         document.addEventListener('mouseup', this.handleHandlerMouseUp);
-
+        window.onload = this.handleWindowLoad;
+    },
+    componentWillUnmount: function componentWillUnmount() {
+        document.removeEventListener('mousemove', this.handleHandlerMouseMove);
+        document.removeEventListener('mouseup', this.handleHandlerMouseUp);
+        window.removeEventListener('load', this.handleWindowLoad);
+    },
+    componentDidUpdate: function componentDidUpdate() {
+        this.updateTrackVisibilities();
+    },
+    handleWindowLoad: function handleWindowLoad() {
         this.collectInfo();
         this.updateTrackVisibilities();
         this.handlerContainerScroll();
@@ -133,13 +143,6 @@ module.exports = React.createClass({
         if (this.props.start.includes('right')) {
             this.el.scrollLeft = this.el.scrollWidth;
         }
-    },
-    componentWillUnmount: function componentWillUnmount() {
-        document.removeEventListener('mousemove', this.handleHandlerMouseMove);
-        document.removeEventListener('mouseup', this.handleHandlerMouseUp);
-    },
-    componentDidUpdate: function componentDidUpdate() {
-        this.updateTrackVisibilities();
     },
     collectInfo: function collectInfo() {
         this.el = findDOMNode(this.refs.container);
@@ -213,6 +216,7 @@ module.exports = React.createClass({
         var scrollHeight = el.scrollHeight,
             scrollWidth = el.scrollWidth;
         if (scrollHeight === this.lastScrollHeight && scrollWidth === this.lastScrollWidth) return;
+        console.log(scrollHeight, this.offsetHeight);
         this.setState({
             showVeriticalTrack: scrollHeight > this.offsetHeight,
             showHorizontalTrack: scrollWidth > this.offsetWidth
