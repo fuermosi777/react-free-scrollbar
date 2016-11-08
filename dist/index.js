@@ -122,7 +122,7 @@ module.exports = React.createClass({
     componentDidMount: function componentDidMount() {
         document.addEventListener('mousemove', this.handleHandlerMouseMove);
         document.addEventListener('mouseup', this.handleHandlerMouseUp);
-        window.addEventListener('load', this.handleWindowLoad);
+        document.addEventListener('readystatechange', this.handleReadyStateChange);
 
         this.collectInfo();
         this.updateTrackVisibilities();
@@ -137,20 +137,22 @@ module.exports = React.createClass({
     componentWillUnmount: function componentWillUnmount() {
         document.removeEventListener('mousemove', this.handleHandlerMouseMove);
         document.removeEventListener('mouseup', this.handleHandlerMouseUp);
-        window.removeEventListener('load', this.handleWindowLoad);
+        document.removeEventListener('readystatechange', this.handleReadyStateChange);
     },
     componentDidUpdate: function componentDidUpdate() {
         this.updateTrackVisibilities();
     },
-    handleWindowLoad: function handleWindowLoad() {
-        this.collectInfo();
-        this.updateTrackVisibilities();
-        this.handlerContainerScroll();
-        if (this.props.start.includes('bottom')) {
-            this.el.scrollTop = this.el.scrollHeight;
-        }
-        if (this.props.start.includes('right')) {
-            this.el.scrollLeft = this.el.scrollWidth;
+    handleReadyStateChange: function handleReadyStateChange() {
+        if (document.readyState === 'complete') {
+            this.collectInfo();
+            this.updateTrackVisibilities();
+            this.handlerContainerScroll();
+            if (this.props.start.includes('bottom')) {
+                this.el.scrollTop = this.el.scrollHeight;
+            }
+            if (this.props.start.includes('right')) {
+                this.el.scrollLeft = this.el.scrollWidth;
+            }
         }
     },
     collectInfo: function collectInfo() {

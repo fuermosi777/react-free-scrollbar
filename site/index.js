@@ -63,7 +63,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "09de511f647a59c9729a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "07454e1d16a3838d18d7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -22760,7 +22760,7 @@
 	    componentDidMount: function componentDidMount() {
 	        document.addEventListener('mousemove', this.handleHandlerMouseMove);
 	        document.addEventListener('mouseup', this.handleHandlerMouseUp);
-	        window.addEventListener('load', this.handleWindowLoad);
+	        document.addEventListener('readystatechange', this.handleReadyStateChange);
 
 	        this.collectInfo();
 	        this.updateTrackVisibilities();
@@ -22775,20 +22775,22 @@
 	    componentWillUnmount: function componentWillUnmount() {
 	        document.removeEventListener('mousemove', this.handleHandlerMouseMove);
 	        document.removeEventListener('mouseup', this.handleHandlerMouseUp);
-	        window.removeEventListener('load', this.handleWindowLoad);
+	        document.removeEventListener('readystatechange', this.handleReadyStateChange);
 	    },
 	    componentDidUpdate: function componentDidUpdate() {
 	        this.updateTrackVisibilities();
 	    },
-	    handleWindowLoad: function handleWindowLoad() {
-	        this.collectInfo();
-	        this.updateTrackVisibilities();
-	        this.handlerContainerScroll();
-	        if (this.props.start.includes('bottom')) {
-	            this.el.scrollTop = this.el.scrollHeight;
-	        }
-	        if (this.props.start.includes('right')) {
-	            this.el.scrollLeft = this.el.scrollWidth;
+	    handleReadyStateChange: function handleReadyStateChange() {
+	        if (document.readyState === 'complete') {
+	            this.collectInfo();
+	            this.updateTrackVisibilities();
+	            this.handlerContainerScroll();
+	            if (this.props.start.includes('bottom')) {
+	                this.el.scrollTop = this.el.scrollHeight;
+	            }
+	            if (this.props.start.includes('right')) {
+	                this.el.scrollLeft = this.el.scrollWidth;
+	            }
 	        }
 	    },
 	    collectInfo: function collectInfo() {
