@@ -1,6 +1,6 @@
 {
   "name": "react-free-scrollbar",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "A react module for creating customizable scroll area",
   "main": "dist/index.js",
   "scripts": {

@@ -70,6 +70,10 @@ The starting position of the scroll area. Default: "top left".
 
 Options: "bottom", "bottom right", "top right", "right"
 
+### `browserOffset: String`
+
+The browser scroll bar width. Default: "17px". [It should fit for most browsers](https://codepen.io/sambible/post/browser-scrollbar-widths).
+
 ## Customization
 
 Adding a custom className to the component will give you power to customize the scrollbar's track and handler. Here is an example:

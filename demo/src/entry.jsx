@@ -40,7 +40,7 @@ let Root = React.createClass({
                         <div className="col-md-6">
                             <h4>Quick start</h4>
                             <div className="quick-start">
-                                <FreeScrollBar start={"top"}>
+                                <FreeScrollBar start={"top"} browserOffset={"20px"}>
                                     <div className="inner">{List}{List}{List}{List}{List}{List}{List}</div>
                                 </FreeScrollBar>
                             </div>
