@@ -1,6 +1,8 @@
 var React = require('react');
 var findDOMNode = require('react-dom').findDOMNode;
 
+const { PropTypes } = React;
+
 const VERTICAL = 'vertial';
 const HORIZONTAL = 'horizontal';
 
@@ -14,8 +16,6 @@ const styles = {
         position: 'absolute',
         top: '0',
         left: '0',
-        right: '-15px',
-        bottom: '-15px',
         overflow: 'scroll',
         boxSizing: 'border-box'
     },
@@ -76,6 +76,17 @@ const styles = {
 module.exports = React.createClass({
     displayName: 'FreeScrollbar',
 
+    propTypes: {
+        className: PropTypes.string,
+        style: PropTypes.object,
+        fixed: PropTypes.bool,
+        autohide: PropTypes.bool,
+        timeout: PropTypes.number,
+        tracksize: PropTypes.string,
+        start: PropTypes.string,
+        browserOffset: PropTypes.string
+    },
+
     getDefaultProps() {
         return {
             className: '',
@@ -88,6 +99,7 @@ module.exports = React.createClass({
             timeout: 2000,
             tracksize: '10px',
             start: 'top left',
+            browserOffset: '17px'
         }
     },
 
@@ -166,7 +178,9 @@ module.exports = React.createClass({
         // Dynamic styles
         var containerStyles = {
             paddingBottom: this.props.fixed ? 0 : (this.state.showHorizontalTrack ? this.props.tracksize : 0),
-            paddingBottom: this.props.fixed ? 0 : (this.state.showVeriticalTrack ? this.props.tracksize : 0)
+            paddingBottom: this.props.fixed ? 0 : (this.state.showVeriticalTrack ? this.props.tracksize : 0),
+            right: `-${this.props.browserOffset}`,
+            bottom: `-${this.props.browserOffset}`
         };
         if (this.state.noselect) {
             containerStyles.MozUserSelect = 'none';

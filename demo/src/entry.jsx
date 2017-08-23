@@ -40,7 +40,7 @@ let Root = React.createClass({
                         <div className="col-md-6">
                             <h4>Quick start</h4>
                             <div className="quick-start">
-                                <FreeScrollBar start={"top"}>
+                                <FreeScrollBar start={"top"} browserOffset={"20px"}>
                                     <div className="inner">{List}{List}{List}{List}{List}{List}{List}</div>
                                 </FreeScrollBar>
                             </div>
@@ -77,7 +77,7 @@ let Root = React.createClass({
                     
                     <h3></h3>
                     <a href="https://github.com/fuermosi777/react-free-scrollbar" className="btn btn-lg btn-primary"><span className="fui-github"></span> Documentation on Github</a>
-                    <p className="footer">&copy; 2016 Hao Liu</p>
+                    <p className="footer">&copy; 2017 Hao Liu</p>
                 </div>
             </div>
         );
