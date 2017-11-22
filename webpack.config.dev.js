@@ -14,7 +14,7 @@ module.exports = {
     module: {
         loaders: [{
             test: /\.jsx$/,
-            loaders: ['react-hot', 'babel'],
+            loaders: ['react-hot-loader/webpack', 'babel'],
             exclude: /node_modules/
         }, {
             test: /\.js$/,

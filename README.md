@@ -74,6 +74,14 @@ Options: "bottom", "bottom right", "top right", "right"
 
 The browser scroll bar width. Default: "17px". [It should fit for most browsers](https://codepen.io/sambible/post/browser-scrollbar-widths).
 
+### `onScrollbarScroll: Function` optional
+
+Fired when the scrollbar is scrolled.
+
+### `onScrollbarScrollTimeout: Number` optional
+
+This timeout adds a throttle for `onScrollbarScroll`. Default is `300`. Set to `0` to remove throttle.
+
 ## Customization
 
 Adding a custom className to the component will give you power to customize the scrollbar's track and handler. Here is an example:

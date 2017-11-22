@@ -1,6 +1,6 @@
 {
   "name": "react-free-scrollbar",
-  "version": "0.2.6",
+  "version": "0.3.0",
   "description": "A react module for creating customizable scroll area",
   "main": "dist/index.js",
   "scripts": {
@@ -21,12 +21,7 @@
     "url": "https://github.com/fuermosi777/react-free-scrollbar/issues"
   },
   "homepage": "https://github.com/fuermosi777/react-free-scrollbar#readme",
-  "peerDependencies": {
-    "react": "^15.3.1",
-    "react-dom": "^15.3.1"
-  },
   "devDependencies": {
-    "autoprefixer-loader": "^3.2.0",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
@@ -40,9 +35,14 @@
     "less-loader": "^2.2.2",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
-    "react-hot-loader": "^1.3.0",
+    "react-hot-loader": "^3.1.3",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.12",
     "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.0",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1"
   }
 }

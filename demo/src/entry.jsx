@@ -13,7 +13,7 @@ let List = things.map((item, key) => {
 
 let Text = (<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente sint quos at. Quae in voluptate, autem ipsa porro quisquam architecto eos impedit laudantium, dolorem blanditiis fugiat maxime, veritatis voluptas temporibus?<br/><br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic consequuntur, incidunt explicabo reiciendis, reprehenderit voluptates dolorum possimus quo consequatur ratione quasi ipsa provident, ducimus similique. Ipsum quo alias exercitationem corrupti?<br/><br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic consequuntur, incidunt explicabo reiciendis, reprehenderit voluptates dolorum possimus quo consequatur ratione quasi ipsa provident, ducimus similique. Ipsum quo alias exercitationem corrupti?<br/><br/>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic consequuntur, incidunt explicabo reiciendis, reprehenderit voluptates dolorum possimus quo consequatur ratione quasi ipsa provident, ducimus similique. Ipsum quo alias exercitationem corrupti?</p>);
 
-let Root = React.createClass({
+class Root extends React.Component {
     render() {
         return (
             <div className="Root">
@@ -66,7 +66,7 @@ let Root = React.createClass({
                         <div className="col-md-6">
                             <h4>Auto hide, and the starting position is on the "bottom right".</h4>
                             <div className="auto-hide">
-                                <FreeScrollBar className="example" autohide={true} fixed={true} start={'bottom right'}>
+                                <FreeScrollBar className="example" autohide={true} fixed={true} start={'bottom right'} onScrollbarScroll={() => {console.log('scrolled')}} onScrollbarScrollTimeout={100}>
                                     <div className="inner">{Text}</div>
                                 </FreeScrollBar>
                             </div>
@@ -82,7 +82,7 @@ let Root = React.createClass({
             </div>
         );
     }
-})
+}
 
 ReactDOM.render(
     <Root/>, document.getElementById('app')
