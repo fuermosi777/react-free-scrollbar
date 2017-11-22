@@ -1,9 +1,30 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var React = require('react');
-var findDOMNode = require('react-dom').findDOMNode;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var VERTICAL = 'vertial';
 var HORIZONTAL = 'horizontal';
@@ -18,8 +39,6 @@ var styles = {
         position: 'absolute',
         top: '0',
         left: '0',
-        right: '-15px',
-        bottom: '-15px',
         overflow: 'scroll',
         boxSizing: 'border-box'
     },
@@ -77,38 +96,149 @@ var styles = {
     }
 };
 
-module.exports = React.createClass({
-    displayName: 'FreeScrollbar',
+var FreeScrollbar = function (_React$Component) {
+    _inherits(FreeScrollbar, _React$Component);
 
-    getDefaultProps: function getDefaultProps() {
-        return {
-            className: '',
-            style: {
-                width: '100%',
-                height: '100%'
-            },
-            fixed: false,
-            autohide: false,
-            timeout: 2000,
-            tracksize: '10px',
-            start: 'top left'
+    function FreeScrollbar(props) {
+        _classCallCheck(this, FreeScrollbar);
+
+        var _this = _possibleConstructorReturn(this, (FreeScrollbar.__proto__ || Object.getPrototypeOf(FreeScrollbar)).call(this, props));
+
+        _this.el = null;
+        _this.offsetHeight = 0;
+        _this.offsetWidth = 0;
+        _this.lastScrollHeight = 0;
+        _this.lastScrollWidth = 0;
+        _this.activeHandler = null;
+        _this.lastMousePos = null;
+        _this.lastContainerScrollTop = 0;
+        _this.lastContainerScrollLeft = 0;
+        _this.handlerHider = null;
+        _this.scrollbarScrollThrottle = null;
+
+        _this.handleReadyStateChange = function () {
+            if (document.readyState === 'complete') {
+                _this.prepareScrollbar();
+            }
         };
-    },
+
+        _this.prepareScrollbar = function () {
+            _this.collectInfo();
+            _this.updateTrackVisibilities();
+            _this.handlerContainerScroll();
+            if (_this.props.start.includes('bottom')) {
+                _this.el.scrollTop = _this.el.scrollHeight;
+            }
+            if (_this.props.start.includes('right')) {
+                _this.el.scrollLeft = _this.el.scrollWidth;
+            }
+        };
+
+        _this.collectInfo = function () {
+            _this.offsetWidth = _this.el.offsetWidth;
+            _this.offsetHeight = _this.el.offsetHeight;
+        };
+
+        _this.updateTrackVisibilities = function () {
+            var el = _this.el;
+            var scrollHeight = el.scrollHeight,
+                scrollWidth = el.scrollWidth;
 
 
-    el: null,
-    offsetHeight: 0,
-    offsetWidth: 0,
-    lastScrollHeight: 0,
-    lastScrollWidth: 0,
-    activeHandler: null,
-    lastMousePos: null,
-    lastContainerScrollTop: 0,
-    lastContainerScrollLeft: 0,
-    handlerHider: null,
+            if (scrollHeight === _this.lastScrollHeight && scrollWidth === _this.lastScrollWidth) return;
+            _this.setState({
+                showVeriticalTrack: scrollHeight > _this.offsetHeight,
+                showHorizontalTrack: scrollWidth > _this.offsetWidth
+            });
+            _this.lastScrollWidth = scrollWidth;
+            _this.lastScrollHeight = scrollHeight;
+        };
 
-    getInitialState: function getInitialState() {
-        return {
+        _this.runFunc = function (funcName) {
+            for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+                args[_key - 1] = arguments[_key];
+            }
+
+            if (_this[funcName]) {
+                _this[funcName](args);
+            }
+        };
+
+        _this.throttle = function (func, timeout) {
+            if (!func) return null;
+
+            var canRun = true;
+
+            return function () {
+
+                if (canRun) {
+                    canRun = false;
+                    func.apply(undefined, arguments);
+
+                    setTimeout(function () {
+                        canRun = true;
+                    }, timeout);
+                }
+            };
+        };
+
+        _this.handlerContainerScroll = function (e) {
+            if (_this.props.autohide) {
+                clearTimeout(_this.handlerHider);
+                _this.setState({ hideHandler: false });
+                _this.handlerHider = setTimeout(function () {
+                    _this.setState({ hideHandler: true });
+                }, _this.props.timeout);
+            }
+
+            var el = _this.el;
+            var top = el.scrollTop / (el.scrollHeight - _this.offsetHeight) * (1 - _this.offsetHeight / _this.lastScrollHeight) * 100;
+            var bottom = (1 - (el.scrollTop + _this.offsetHeight) / (el.scrollHeight - _this.offsetHeight) * (1 - _this.offsetHeight / _this.lastScrollHeight)) * 100;
+            if (bottom < 0) bottom = 0;
+            var left = el.scrollLeft / (el.scrollWidth - _this.offsetWidth) * (1 - _this.offsetWidth / _this.lastScrollWidth) * 100;
+            var right = (1 - (el.scrollLeft + _this.offsetWidth) / (el.scrollWidth - _this.offsetWidth) * (1 - _this.offsetWidth / _this.lastScrollWidth)) * 100;
+            if (right < 0) right = 0;
+            var pos = {
+                top: top,
+                bottom: bottom,
+                left: left,
+                right: right
+            };
+            _this.setState({ handlerPos: pos });
+
+            _this.runFunc('scrollbarScrollThrottle');
+        };
+
+        _this.handleVerticalHandlerMouseDown = function (d, e) {
+            _this.lastContainerScrollTop = _this.el.scrollTop;
+            _this.lastContainerScrollLeft = _this.el.scrollLeft;
+
+            _this.activeHandler = d;
+            _this.lastMousePos = {
+                top: e.clientY,
+                left: e.clientX
+            };
+            _this.setState({ noselect: true });
+        };
+
+        _this.handleHandlerMouseMove = function (e) {
+            if (_this.activeHandler === VERTICAL) {
+                var delY = e.clientY - _this.lastMousePos.top;
+                _this.el.scrollTop = _this.lastContainerScrollTop + delY / _this.offsetHeight * _this.lastScrollHeight;
+            }
+            if (_this.activeHandler === HORIZONTAL) {
+                var delX = e.clientX - _this.lastMousePos.left;
+                _this.el.scrollLeft = _this.lastContainerScrollLeft + delX / _this.offsetWidth * _this.lastScrollWidth;
+            }
+        };
+
+        _this.handleHandlerMouseUp = function () {
+            _this.lastMousePos = null;
+            _this.activeHandler = null;
+            _this.setState({ noselect: false });
+        };
+
+        _this.state = {
             showVeriticalTrack: false,
             showHorizontalTrack: false,
             noselect: false,
@@ -116,174 +246,150 @@ module.exports = React.createClass({
                 top: 0,
                 left: 0
             },
-            hideHandler: this.props.autohide
-        };
-    },
-    componentDidMount: function componentDidMount() {
-        document.addEventListener('mousemove', this.handleHandlerMouseMove);
-        document.addEventListener('mouseup', this.handleHandlerMouseUp);
-        document.addEventListener('readystatechange', this.handleReadyStateChange);
-
-        this.collectInfo();
-        this.updateTrackVisibilities();
-        this.handlerContainerScroll();
-        if (this.props.start.includes('bottom')) {
-            this.el.scrollTop = this.el.scrollHeight;
-        }
-        if (this.props.start.includes('right')) {
-            this.el.scrollLeft = this.el.scrollWidth;
-        }
-    },
-    componentWillUnmount: function componentWillUnmount() {
-        document.removeEventListener('mousemove', this.handleHandlerMouseMove);
-        document.removeEventListener('mouseup', this.handleHandlerMouseUp);
-        document.removeEventListener('readystatechange', this.handleReadyStateChange);
-    },
-    componentDidUpdate: function componentDidUpdate() {
-        this.updateTrackVisibilities();
-    },
-    handleReadyStateChange: function handleReadyStateChange() {
-        if (document.readyState === 'complete') {
-            this.collectInfo();
-            this.updateTrackVisibilities();
-            this.handlerContainerScroll();
-            if (this.props.start.includes('bottom')) {
-                this.el.scrollTop = this.el.scrollHeight;
-            }
-            if (this.props.start.includes('right')) {
-                this.el.scrollLeft = this.el.scrollWidth;
-            }
-        }
-    },
-    collectInfo: function collectInfo() {
-        this.el = findDOMNode(this.refs.container);
-        this.offsetWidth = this.el.offsetWidth;
-        this.offsetHeight = this.el.offsetHeight;
-    },
-    render: function render() {
-        // Dynamic styles
-        var containerStyles = _defineProperty({
-            paddingBottom: this.props.fixed ? 0 : this.state.showHorizontalTrack ? this.props.tracksize : 0
-        }, 'paddingBottom', this.props.fixed ? 0 : this.state.showVeriticalTrack ? this.props.tracksize : 0);
-        if (this.state.noselect) {
-            containerStyles.MozUserSelect = 'none';
-            containerStyles.WebkitUserSelect = 'none';
-            containerStyles.msUserSelect = 'none';
-        }
-        var verticalTrackStyles = {
-            bottom: this.state.showHorizontalTrack ? this.props.tracksize : '0',
-            opacity: this.state.hideHandler ? 0 : 1
-        };
-        var horizontalTrackStyles = {
-            right: this.state.showVeriticalTrack ? this.props.tracksize : '0',
-            opacity: this.state.hideHandler ? 0 : 1
-        };
-        var verticalHandlerStyles = {
-            top: this.state.handlerPos.top + '%',
-            bottom: this.state.handlerPos.bottom + '%',
-            opacity: this.state.hideHandler ? 0 : 1
-        };
-        var horizontalHandlerStyles = {
-            left: this.state.handlerPos.left + '%',
-            right: this.state.handlerPos.right + '%',
-            opacity: this.state.hideHandler ? 0 : 1
+            hideHandler: props.autohide
         };
 
-        return React.createElement(
-            'div',
-            { className: 'FreeScrollbar ' + this.props.className,
-                style: Object.assign(this.props.style, styles.main) },
-            React.createElement(
-                'div',
-                { className: 'FreeScrollbar-container',
-                    style: Object.assign(containerStyles, styles.container),
-                    ref: 'container',
-                    onScroll: this.handlerContainerScroll },
-                this.props.children
-            ),
-            this.state.showVeriticalTrack ? React.createElement(
-                'div',
-                {
-                    className: 'FreeScrollbar-vertical-track ' + (this.props.className ? this.props.className + '-vertical-track' : ''),
-                    style: this.props.className ? Object.assign(verticalTrackStyles, styles.track.vertical) : Object.assign(verticalTrackStyles, styles.track.vertical, styles.track.verticalCustomize) },
-                React.createElement('div', { className: 'FreeScrollbar-vertical-handler ' + (this.props.className ? this.props.className + '-vertical-handler' : ''),
-                    onMouseDown: this.handleVerticalHandlerMouseDown.bind(this, VERTICAL),
-                    style: this.props.className ? Object.assign(verticalHandlerStyles, styles.handler.vertical) : Object.assign(verticalHandlerStyles, styles.handler.vertical, styles.handler.verticalCustomize) })
-            ) : null,
-            this.state.showHorizontalTrack ? React.createElement(
-                'div',
-                {
-                    className: 'FreeScrollbar-horizontal-track ' + (this.props.className ? this.props.className + '-horizontal-track' : ''),
-                    style: this.props.className ? Object.assign(horizontalTrackStyles, styles.track.horizontal) : Object.assign(horizontalTrackStyles, styles.track.horizontal, styles.track.horizontalCustomize) },
-                React.createElement('div', { className: 'FreeScrollbar-horizontal-handler ' + (this.props.className ? this.props.className + '-horizontal-handler' : ''),
-                    onMouseDown: this.handleVerticalHandlerMouseDown.bind(this, HORIZONTAL),
-                    style: this.props.className ? Object.assign(horizontalHandlerStyles, styles.handler.horizontal) : Object.assign(horizontalHandlerStyles, styles.handler.horizontal, styles.handler.horizontalCustomize) })
-            ) : null,
-            this.state.showHorizontalTrack && this.state.showVeriticalTrack && !this.props.fixed ? React.createElement('div', { className: 'FreeScrollbar-square ' + (this.props.className ? this.props.className + '-square' : ''), style: styles.square }) : null
-        );
-    },
-    updateTrackVisibilities: function updateTrackVisibilities() {
-        var el = this.el;
-        var scrollHeight = el.scrollHeight,
-            scrollWidth = el.scrollWidth;
-        if (scrollHeight === this.lastScrollHeight && scrollWidth === this.lastScrollWidth) return;
-        this.setState({
-            showVeriticalTrack: scrollHeight > this.offsetHeight,
-            showHorizontalTrack: scrollWidth > this.offsetWidth
-        });
-        this.lastScrollWidth = scrollWidth;
-        this.lastScrollHeight = scrollHeight;
-    },
-    handlerContainerScroll: function handlerContainerScroll(e) {
-        var _this = this;
-
-        if (this.props.autohide) {
-            clearTimeout(this.handlerHider);
-            this.setState({ hideHandler: false });
-            this.handlerHider = setTimeout(function () {
-                _this.setState({ hideHandler: true });
-            }, this.props.timeout);
-        }
-
-        var el = this.el;
-        var top = el.scrollTop / (el.scrollHeight - this.offsetHeight) * (1 - this.offsetHeight / this.lastScrollHeight) * 100;
-        var bottom = (1 - (el.scrollTop + this.offsetHeight) / (el.scrollHeight - this.offsetHeight) * (1 - this.offsetHeight / this.lastScrollHeight)) * 100;
-        if (bottom < 0) bottom = 0;
-        var left = el.scrollLeft / (el.scrollWidth - this.offsetWidth) * (1 - this.offsetWidth / this.lastScrollWidth) * 100;
-        var right = (1 - (el.scrollLeft + this.offsetWidth) / (el.scrollWidth - this.offsetWidth) * (1 - this.offsetWidth / this.lastScrollWidth)) * 100;
-        if (right < 0) right = 0;
-        var pos = {
-            top: top,
-            bottom: bottom,
-            left: left,
-            right: right
-        };
-        this.setState({ handlerPos: pos });
-    },
-    handleVerticalHandlerMouseDown: function handleVerticalHandlerMouseDown(d, e) {
-        this.lastContainerScrollTop = this.el.scrollTop;
-        this.lastContainerScrollLeft = this.el.scrollLeft;
-
-        this.activeHandler = d;
-        this.lastMousePos = {
-            top: e.clientY,
-            left: e.clientX
-        };
-        this.setState({ noselect: true });
-    },
-    handleHandlerMouseMove: function handleHandlerMouseMove(e) {
-        if (this.activeHandler === VERTICAL) {
-            var delY = e.clientY - this.lastMousePos.top;
-            this.el.scrollTop = this.lastContainerScrollTop + delY / this.offsetHeight * this.lastScrollHeight;
-        }
-        if (this.activeHandler === HORIZONTAL) {
-            var delX = e.clientX - this.lastMousePos.left;
-            this.el.scrollLeft = this.lastContainerScrollLeft + delX / this.offsetWidth * this.lastScrollWidth;
-        }
-    },
-    handleHandlerMouseUp: function handleHandlerMouseUp() {
-        this.lastMousePos = null;
-        this.activeHandler = null;
-        this.setState({ noselect: false });
+        // build prop funcs
+        _this.scrollbarScrollThrottle = props.onScrollbarScrollTimeout > 0 ? _this.throttle(props.onScrollbarScroll, props.onScrollbarScrollTimeout) : props.onScrollbarScroll;
+        return _this;
     }
-});
+
+    /** All prop funcs should be built to this funcs to run */
+    /** @function {Function} - prop func */
+
+
+    _createClass(FreeScrollbar, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            document.addEventListener('mousemove', this.handleHandlerMouseMove);
+            document.addEventListener('mouseup', this.handleHandlerMouseUp);
+            document.addEventListener('readystatechange', this.handleReadyStateChange);
+
+            this.prepareScrollbar();
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            document.removeEventListener('mousemove', this.handleHandlerMouseMove);
+            document.removeEventListener('mouseup', this.handleHandlerMouseUp);
+            document.removeEventListener('readystatechange', this.handleReadyStateChange);
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate() {
+            this.updateTrackVisibilities();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _containerStyles,
+                _this2 = this;
+
+            // Dynamic styles
+            var containerStyles = (_containerStyles = {
+                paddingBottom: this.props.fixed ? 0 : this.state.showHorizontalTrack ? this.props.tracksize : 0
+            }, _defineProperty(_containerStyles, 'paddingBottom', this.props.fixed ? 0 : this.state.showVeriticalTrack ? this.props.tracksize : 0), _defineProperty(_containerStyles, 'right', '-' + this.props.browserOffset), _defineProperty(_containerStyles, 'bottom', '-' + this.props.browserOffset), _containerStyles);
+            if (this.state.noselect) {
+                containerStyles.MozUserSelect = 'none';
+                containerStyles.WebkitUserSelect = 'none';
+                containerStyles.msUserSelect = 'none';
+            }
+            var verticalTrackStyles = {
+                bottom: this.state.showHorizontalTrack ? this.props.tracksize : '0',
+                opacity: this.state.hideHandler ? 0 : 1
+            };
+            var horizontalTrackStyles = {
+                right: this.state.showVeriticalTrack ? this.props.tracksize : '0',
+                opacity: this.state.hideHandler ? 0 : 1
+            };
+            var verticalHandlerStyles = {
+                top: this.state.handlerPos.top + '%',
+                bottom: this.state.handlerPos.bottom + '%',
+                opacity: this.state.hideHandler ? 0 : 1
+            };
+            var horizontalHandlerStyles = {
+                left: this.state.handlerPos.left + '%',
+                right: this.state.handlerPos.right + '%',
+                opacity: this.state.hideHandler ? 0 : 1
+            };
+
+            return _react2.default.createElement(
+                'div',
+                {
+                    className: 'FreeScrollbar ' + this.props.className,
+                    style: _extends({}, this.props.style, styles.main)
+                },
+                _react2.default.createElement(
+                    'div',
+                    {
+                        className: 'FreeScrollbar-container',
+                        style: _extends({}, containerStyles, styles.container),
+                        ref: function ref(container) {
+                            return _this2.el = container;
+                        },
+                        onScroll: this.handlerContainerScroll
+                    },
+                    this.props.children
+                ),
+                this.state.showVeriticalTrack ? _react2.default.createElement(
+                    'div',
+                    {
+                        className: 'FreeScrollbar-vertical-track ' + (this.props.className ? this.props.className + '-vertical-track' : ''),
+                        style: this.props.className ? Object.assign(verticalTrackStyles, styles.track.vertical) : Object.assign(verticalTrackStyles, styles.track.vertical, styles.track.verticalCustomize)
+                    },
+                    _react2.default.createElement('div', {
+                        className: 'FreeScrollbar-vertical-handler ' + (this.props.className ? this.props.className + '-vertical-handler' : ''),
+                        onMouseDown: this.handleVerticalHandlerMouseDown.bind(this, VERTICAL),
+                        style: this.props.className ? Object.assign(verticalHandlerStyles, styles.handler.vertical) : Object.assign(verticalHandlerStyles, styles.handler.vertical, styles.handler.verticalCustomize) })
+                ) : null,
+                this.state.showHorizontalTrack ? _react2.default.createElement(
+                    'div',
+                    {
+                        className: 'FreeScrollbar-horizontal-track ' + (this.props.className ? this.props.className + '-horizontal-track' : ''),
+                        style: this.props.className ? Object.assign(horizontalTrackStyles, styles.track.horizontal) : Object.assign(horizontalTrackStyles, styles.track.horizontal, styles.track.horizontalCustomize)
+                    },
+                    _react2.default.createElement('div', {
+                        className: 'FreeScrollbar-horizontal-handler ' + (this.props.className ? this.props.className + '-horizontal-handler' : ''),
+                        onMouseDown: this.handleVerticalHandlerMouseDown.bind(this, HORIZONTAL),
+                        style: this.props.className ? Object.assign(horizontalHandlerStyles, styles.handler.horizontal) : Object.assign(horizontalHandlerStyles, styles.handler.horizontal, styles.handler.horizontalCustomize) })
+                ) : null,
+                this.state.showHorizontalTrack && this.state.showVeriticalTrack && !this.props.fixed ? _react2.default.createElement('div', {
+                    className: 'FreeScrollbar-square ' + (this.props.className ? this.props.className + '-square' : ''),
+                    style: styles.square }) : null
+            );
+        }
+    }]);
+
+    return FreeScrollbar;
+}(_react2.default.Component);
+
+FreeScrollbar.displayName = 'FreeScrollbar';
+FreeScrollbar.propTypes = {
+    className: _propTypes2.default.string,
+    style: _propTypes2.default.object,
+    fixed: _propTypes2.default.bool,
+    autohide: _propTypes2.default.bool,
+    timeout: _propTypes2.default.number,
+    tracksize: _propTypes2.default.string,
+    start: _propTypes2.default.string,
+    browserOffset: _propTypes2.default.string,
+    onScrollbarScroll: _propTypes2.default.func,
+    onScrollbarScrollTimeout: _propTypes2.default.number
+};
+FreeScrollbar.defaultProps = {
+    className: '',
+    style: {
+        width: '100%',
+        height: '100%'
+    },
+    fixed: false,
+    autohide: false,
+    timeout: 2000,
+    tracksize: '10px',
+    start: 'top left',
+    browserOffset: '17px',
+    onScrollbarScroll: null,
+    onScrollbarScrollTimeout: 300
+};
+exports.default = FreeScrollbar;
+;
