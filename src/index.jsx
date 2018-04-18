@@ -148,6 +148,8 @@ export default class FreeScrollbar extends React.Component {
         document.removeEventListener('mousemove', this.handleHandlerMouseMove);
         document.removeEventListener('mouseup', this.handleHandlerMouseUp);
         document.removeEventListener('readystatechange', this.handleReadyStateChange);
+        
+        clearTimeout(this.handlerHider);
     }
 
     componentDidUpdate() {
