@@ -273,6 +273,8 @@ var FreeScrollbar = function (_React$Component) {
             document.removeEventListener('mousemove', this.handleHandlerMouseMove);
             document.removeEventListener('mouseup', this.handleHandlerMouseUp);
             document.removeEventListener('readystatechange', this.handleReadyStateChange);
+
+            clearTimeout(this.handlerHider);
         }
     }, {
         key: 'componentDidUpdate',
