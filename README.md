@@ -127,4 +127,6 @@ For more examples, go to [http://fuermosi777.github.io/react-free-scrollbar/](ht
 
 `$ npm run demo-dev`
 
+Before publish: make sure run `npm run demo-build` and `npm run dist`.
+
 Go to `http://localhost:8080/demo/dev/`.
