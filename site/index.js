@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f0dc5ac31735e884437b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "59c6ac0caab0095cef5b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -20336,8 +20336,8 @@
 	    }
 	};
 
-	var FreeScrollbar = function (_React$Component) {
-	    _inherits(FreeScrollbar, _React$Component);
+	var FreeScrollbar = function (_React$PureComponent) {
+	    _inherits(FreeScrollbar, _React$PureComponent);
 
 	    function FreeScrollbar(props) {
 	        _classCallCheck(this, FreeScrollbar);
@@ -20603,7 +20603,7 @@
 	    }]);
 
 	    return FreeScrollbar;
-	}(_react2.default.Component);
+	}(_react2.default.PureComponent);
 
 	FreeScrollbar.displayName = 'FreeScrollbar';
 	FreeScrollbar.propTypes = {

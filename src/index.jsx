@@ -71,7 +71,7 @@ const styles = {
     }
 };
 
-export default class FreeScrollbar extends React.Component {
+export default class FreeScrollbar extends React.PureComponent {
     static displayName = 'FreeScrollbar';
 
     static propTypes = {

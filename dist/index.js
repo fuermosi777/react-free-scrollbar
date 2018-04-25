@@ -96,8 +96,8 @@ var styles = {
     }
 };
 
-var FreeScrollbar = function (_React$Component) {
-    _inherits(FreeScrollbar, _React$Component);
+var FreeScrollbar = function (_React$PureComponent) {
+    _inherits(FreeScrollbar, _React$PureComponent);
 
     function FreeScrollbar(props) {
         _classCallCheck(this, FreeScrollbar);
@@ -363,7 +363,7 @@ var FreeScrollbar = function (_React$Component) {
     }]);
 
     return FreeScrollbar;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
 FreeScrollbar.displayName = 'FreeScrollbar';
 FreeScrollbar.propTypes = {
