@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f341cacca41d6e758b28"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9ea3949457830a74a591"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -769,7 +769,7 @@
 	                                _react2.default.createElement(
 	                                    _index2.default,
 	                                    { start: 'bottom right' },
-	                                    _react2.default.createElement('img', { src: 'https://via.placeholder.com/1000x1000', className: 'img-rounded' })
+	                                    _react2.default.createElement('img', { src: 'https://placeimg.com/1000/1000/any', className: 'img-rounded' })
 	                                )
 	                            )
 	                        )

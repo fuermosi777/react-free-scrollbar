@@ -752,7 +752,7 @@
 	                            _react2.default.createElement(
 	                                _index2.default,
 	                                null,
-	                                _react2.default.createElement('img', { src: 'http://designmodo.github.io/Flat-UI/docs/assets/img/example-image.jpg', className: 'img-rounded' })
+	                                _react2.default.createElement('img', { src: 'https://placeimg.com/1000/1000/any', className: 'img-rounded' })
 	                            )
 	                        )
 	                    )
