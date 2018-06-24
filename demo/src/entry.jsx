@@ -49,7 +49,7 @@ class Root extends React.Component {
                             <h4>Horizontal</h4>
                             <div className="horizontal">
                             <FreeScrollBar start={'bottom right'}>
-                                <img src="https://github.com/fuermosi777/react-free-scrollbar/raw/master/example-image.jpeg" className="img-rounded"/>
+                                <img src="https://via.placeholder.com/1000x1000" className="img-rounded"/>
                             </FreeScrollBar>
                         </div>
                     </div>
