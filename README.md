@@ -2,15 +2,14 @@
 
 [![npm version](https://badge.fury.io/js/react-free-scrollbar.svg)](https://badge.fury.io/js/react-free-scrollbar)
 
-A react module for creating customizable scroll area
+A react module for creating customizable scroll area.
 
 Visit [http://fuermosi777.github.io/react-free-scrollbar/](http://fuermosi777.github.io/react-free-scrollbar/) to see [demo](http://fuermosi777.github.io/react-free-scrollbar/).
 
 ## Install
 
     $ npm install --save react-free-scrollbar
-
-Assums you are using NPM package manager and module bundler such as Webpack.
+    $ yarn add react-free-scrollbar
 
 ## Usage
 
@@ -125,8 +124,8 @@ For more examples, go to [http://fuermosi777.github.io/react-free-scrollbar/](ht
 
 ## Develop
 
-`$ npm run demo-dev`
+`$ yarn dev`
 
-Before publish: make sure run `npm run demo-build` and `npm run dist`.
+Before publish: make sure run `yarn demo-build` and `yarn dist`.
 
-Go to `http://localhost:8080/demo/dev/`.
+Go to `http://localhost:8080`.

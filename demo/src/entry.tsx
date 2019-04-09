@@ -1,7 +1,8 @@
-import React from 'react';  
-import ReactDOM from 'react-dom';
-import FreeScrollBar from '../../src/index.jsx';
-import Styles from './demo.less';
+import * as React from 'react';  
+import * as ReactDOM from 'react-dom';
+// @ts-ignore
+import FreeScrollBar from '../../src/index.tsx';
+import './demo.less';
 
 let things = ['Clean the room', 'Take out the ice-cream', 'Do the homework', 'Feed the cat', 'Clean the car', 'Go to dinner', 'Clean the cups', 'Throw a party', 'Repeat things above', 'Think about the trip', 'Make up a list', 'Go out with friends', 'Kick neighbor\'s butt'];
 
