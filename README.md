@@ -84,6 +84,10 @@ Fired when the scrollbar is scrolled.
 
 This timeout adds a throttle for `onScrollbarScroll`. Default is `300`. Set to `0` to remove throttle.
 
+## Methods
+
+### `setPosition(pos: {top: number, left: number})`
+
 ## Customization
 
 Adding a custom className to the component will give you power to customize the scrollbar's track and handler. Here is an example:
