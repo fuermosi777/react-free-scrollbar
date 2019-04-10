@@ -1,19 +1,21 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "commonjs",
     "target": "es5",
     "jsx": "react",
-    "allowJs": true,
     "experimentalDecorators": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "moduleResolution": "node",
-    "lib": ["es2015", "dom"]
+    "lib": ["es2015", "dom"],
+    "declaration": true
   },
-  "includes": ["src/**/*", "test/**/*"],
+  "files": [
+    "src/index.tsx"
+  ],
   "exclude": ["node_modules", "**/*.spec.ts", "lib", "build", "dist"]
 }

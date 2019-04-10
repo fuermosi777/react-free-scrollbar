@@ -9,6 +9,9 @@ Visit [http://fuermosi777.github.io/react-free-scrollbar/](http://fuermosi777.gi
 ## Install
 
     $ npm install --save react-free-scrollbar
+
+or
+
     $ yarn add react-free-scrollbar
 
 ## Usage
@@ -28,7 +31,7 @@ Visit [http://fuermosi777.github.io/react-free-scrollbar/](http://fuermosi777.gi
 
 ## Props
 
-### `className: String` optional
+### `className: string` optional
 
 Add custom class to the scroller. If you add a custom className to the component, all default styles will not working. You have to also add the following styles in your CSS files:
 
@@ -39,7 +42,7 @@ Add custom class to the scroller. If you add a custom className to the component
     .demo-vertical-handler {} // required
     .demo-horizontal-handler {} // required
 
-### `style: Object` optional
+### `style: object` optional
 
 If you just want to add some simple styles, you can pass this prop to the component.
 
@@ -47,29 +50,29 @@ Example:
 
     <FreeScrollerBar style={{width: "100%", height: "100%"}}></FreeScrollerBar>
 
-### `fixed: Bool` optional
+### `fixed: boolean` optional
 
 You can pass `fixed` to decide if handler's position: fixed or static. If `fixed` equals `true`, then the handler will overlap the content inside the scroller.
 
-### `autohide: Bool` optional
+### `autohide: boolean` optional
 
 Set `true` if you want a macOS style auto-hide scroller.
 
-### `timeout: Integer` optional
+### `timeout: number` optional
 
 The time length of the handler disappears. Default: 2000
 
-### `tracksize: String`
+### `tracksize: string`
 
 The width of the vertical handler or the height of the horizontal handler. Default: 10px
 
-### `start: String`
+### `start: string | object`
 
-The starting position of the scroll area. Default: "top left".
+The starting position of the scroll area, can be descriptive string or an object.
 
-Options: "bottom", "bottom right", "top right", "right"
+Options: "bottom", "bottom right", "top right", "right", `{top: 20, left: 30}`
 
-### `browserOffset: String`
+### `browserOffset: string`
 
 The browser scroll bar width. Default: "17px". [It should fit for most browsers](https://codepen.io/sambible/post/browser-scrollbar-widths).
 
@@ -126,6 +129,9 @@ For more examples, go to [http://fuermosi777.github.io/react-free-scrollbar/](ht
 
 `$ yarn dev`
 
-Before publish: make sure run `yarn demo-build` and `yarn dist`.
-
 Go to `http://localhost:8080`.
+
+## Publish
+
+`$ yarn dist`
+`$ npm publish`

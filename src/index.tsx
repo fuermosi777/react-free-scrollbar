@@ -5,7 +5,7 @@ enum Direction {
   Horizontal,
 }
 
-type Pos = {
+export type Pos = {
   top: number;
   left: number;
   bottom: number;
@@ -87,17 +87,20 @@ interface State {
   hideHandler: boolean;
 }
 
+export type StartOption = '' | 'bottom' | 'right' | 'bottom right' | { top: number; left: number };
+
 export interface Props {
-  className: string;
-  style: object;
-  fixed: boolean;
-  autohide: boolean;
-  timeout: number;
-  tracksize: string;
-  start: string;
-  browserOffset: string;
+  className?: string;
+  style?: object;
+  fixed?: boolean;
+  autohide?: boolean;
+  timeout?: number;
+  tracksize?: string;
+  // Initial scroll bar position.
+  start?: StartOption;
+  browserOffset?: string;
   onScrollbarScroll?: () => void;
-  onScrollbarScrollTimeout: number;
+  onScrollbarScrollTimeout?: number;
 }
 
 export default class FreeScrollbar extends React.PureComponent<Props, State> {
@@ -113,7 +116,7 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
     autohide: false,
     timeout: 2000,
     tracksize: '10px',
-    start: 'top left',
+    start: '',
     browserOffset: '17px',
     onScrollbarScroll: null,
     onScrollbarScrollTimeout: 300,
@@ -138,10 +141,12 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
       showHorizontalTrack: false,
       noselect: false,
       handlerPos: {
+        // Vertical handler.
         top: 0,
+        bottom: 0,
+        // Horizontal handler.
         left: 0,
         right: 0,
-        bottom: 0,
       },
       hideHandler: props.autohide,
     };
@@ -198,16 +203,25 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
   private prepareScrollbar = () => {
     this.collectInfo();
     this.updateTrackVisibilities();
+
+    // Trigger auto hider.
     this.handlerContainerScroll();
-    if (this.props.start.includes('bottom')) {
-      this.el.scrollTop = this.el.scrollHeight;
-    }
-    if (this.props.start.includes('right')) {
-      this.el.scrollLeft = this.el.scrollWidth;
+
+    const { start } = this.props;
+    if (typeof start === 'string') {
+      if (start.includes('bottom')) {
+        this.el.scrollTop = this.el.scrollHeight;
+      }
+      if (start.includes('right')) {
+        this.el.scrollLeft = this.el.scrollWidth;
+      }
+    } else if (typeof start === 'object') {
+      this.el.scrollTop = start.top;
+      this.el.scrollLeft = start.left;
     }
   };
 
-  collectInfo = () => {
+  private collectInfo = () => {
     this.offsetWidth = this.el.offsetWidth;
     this.offsetHeight = this.el.offsetHeight;
   };
@@ -225,7 +239,7 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
     this.lastScrollHeight = scrollHeight;
   };
 
-  private handlerContainerScroll = () => {
+  private resetHandlerHider = () => {
     if (this.props.autohide) {
       clearTimeout(this.handlerHider);
       this.setState({ hideHandler: false });
@@ -233,29 +247,33 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
         this.setState({ hideHandler: true });
       }, this.props.timeout);
     }
+  };
 
-    var el = this.el;
-    var top =
+  private handlerContainerScroll = () => {
+    this.resetHandlerHider();
+
+    let el = this.el;
+    let top =
       (el.scrollTop / (el.scrollHeight - this.offsetHeight)) *
       (1 - this.offsetHeight / this.lastScrollHeight) *
       100;
-    var bottom =
+    let bottom =
       (1 -
         ((el.scrollTop + this.offsetHeight) / (el.scrollHeight - this.offsetHeight)) *
           (1 - this.offsetHeight / this.lastScrollHeight)) *
       100;
     if (bottom < 0) bottom = 0;
-    var left =
+    let left =
       (el.scrollLeft / (el.scrollWidth - this.offsetWidth)) *
       (1 - this.offsetWidth / this.lastScrollWidth) *
       100;
-    var right =
+    let right =
       (1 -
         ((el.scrollLeft + this.offsetWidth) / (el.scrollWidth - this.offsetWidth)) *
           (1 - this.offsetWidth / this.lastScrollWidth)) *
       100;
     if (right < 0) right = 0;
-    var pos = {
+    let pos = {
       top: top,
       bottom: bottom,
       left: left,
@@ -264,14 +282,15 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
     this.setState({ handlerPos: pos });
 
     if (this.scrollbarScrollThrottle) {
-        this.scrollbarScrollThrottle();
+      this.scrollbarScrollThrottle();
     }
   };
 
-  private handleVerticalHandlerMouseDown = (
+  private handleHandlerMouseDown = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     d: Direction
   ) => {
+    this.resetHandlerHider();
     this.lastContainerScrollTop = this.el.scrollTop;
     this.lastContainerScrollLeft = this.el.scrollLeft;
 
@@ -285,12 +304,12 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
 
   private handleHandlerMouseMove = (event: MouseEvent) => {
     if (this.activeHandler === Direction.Vertical) {
-      var delY = event.clientY - this.lastMousePos.top;
+      let delY = event.clientY - this.lastMousePos.top;
       this.el.scrollTop =
         this.lastContainerScrollTop + (delY / this.offsetHeight) * this.lastScrollHeight;
     }
     if (this.activeHandler === Direction.Horizontal) {
-      var delX = event.clientX - this.lastMousePos.left;
+      let delX = event.clientX - this.lastMousePos.left;
       this.el.scrollLeft =
         this.lastContainerScrollLeft + (delX / this.offsetWidth) * this.lastScrollWidth;
     }
@@ -302,7 +321,19 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
     this.setState({ noselect: false });
   };
 
-  render() {
+  /**
+   * Set the scrolling position manually.
+   */
+  public setPosition = (pos: {top?: number, left?: number}) => {
+    if (pos.top) {
+    this.el.scrollTop = pos.top;
+    }
+    if (pos.left) {
+    this.el.scrollLeft = pos.left;
+    }
+  }
+
+  public render() {
     // Dynamic styles
     let containerStyles: React.CSSProperties = {
       paddingRight: this.props.fixed
@@ -343,6 +374,8 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
       opacity: this.state.hideHandler ? 0 : 1,
     };
 
+    
+
     return (
       <div
         className={`FreeScrollbar ${this.props.className}`}
@@ -373,7 +406,7 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
                 this.props.className ? this.props.className + '-vertical-handler' : ''
               }`}
               onMouseDown={(event) => {
-                this.handleVerticalHandlerMouseDown(event, Direction.Vertical);
+                this.handleHandlerMouseDown(event, Direction.Vertical);
               }}
               style={
                 this.props.className
@@ -405,7 +438,9 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
               className={`FreeScrollbar-horizontal-handler ${
                 this.props.className ? this.props.className + '-horizontal-handler' : ''
               }`}
-              onMouseDown={this.handleVerticalHandlerMouseDown.bind(this, Direction.Horizontal)}
+              onMouseDown={(event) => {
+                this.handleHandlerMouseDown(event, Direction.Horizontal);
+              }}
               style={
                 this.props.className
                   ? Object.assign(horizontalHandlerStyles, styles.handler.horizontal)
