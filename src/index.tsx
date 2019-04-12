@@ -175,6 +175,7 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
       : this.props.onScrollbarScroll;
 
   public componentDidMount() {
+    window.addEventListener('resize', this.prepareScrollbar);
     document.addEventListener('mousemove', this.handleHandlerMouseMove);
     document.addEventListener('mouseup', this.handleHandlerMouseUp);
     document.addEventListener('readystatechange', this.handleReadyStateChange);
@@ -183,6 +184,7 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
   }
 
   public componentWillUnmount() {
+    window.removeEventListener('resize', this.prepareScrollbar);
     document.removeEventListener('mousemove', this.handleHandlerMouseMove);
     document.removeEventListener('mouseup', this.handleHandlerMouseUp);
     document.removeEventListener('readystatechange', this.handleReadyStateChange);
@@ -197,6 +199,7 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
   private handleReadyStateChange = () => {
     if (document.readyState === 'complete') {
       this.prepareScrollbar();
+      this.prepareScrollbarStartPos();
     }
   };
 
@@ -206,7 +209,9 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
 
     // Trigger auto hider.
     this.handlerContainerScroll();
+  };
 
+  private prepareScrollbarStartPos = () => {
     const { start } = this.props;
     if (typeof start === 'string') {
       if (start.includes('bottom')) {
@@ -219,7 +224,7 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
       this.el.scrollTop = start.top;
       this.el.scrollLeft = start.left;
     }
-  };
+  }
 
   private collectInfo = () => {
     this.offsetWidth = this.el.offsetWidth;

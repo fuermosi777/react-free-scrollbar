@@ -49,6 +49,7 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
     componentDidUpdate(): void;
     private handleReadyStateChange;
     private prepareScrollbar;
+    private prepareScrollbarStartPos;
     private collectInfo;
     private updateTrackVisibilities;
     private resetHandlerHider;

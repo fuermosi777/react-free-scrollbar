@@ -134,6 +134,7 @@ var FreeScrollbar = /** @class */ (function (_super) {
         _this.handleReadyStateChange = function () {
             if (document.readyState === 'complete') {
                 _this.prepareScrollbar();
+                _this.prepareScrollbarStartPos();
             }
         };
         _this.prepareScrollbar = function () {
@@ -141,6 +142,8 @@ var FreeScrollbar = /** @class */ (function (_super) {
             _this.updateTrackVisibilities();
             // Trigger auto hider.
             _this.handlerContainerScroll();
+        };
+        _this.prepareScrollbarStartPos = function () {
             var start = _this.props.start;
             if (typeof start === 'string') {
                 if (start.includes('bottom')) {
@@ -268,12 +271,14 @@ var FreeScrollbar = /** @class */ (function (_super) {
         return _this;
     }
     FreeScrollbar.prototype.componentDidMount = function () {
+        window.addEventListener('resize', this.prepareScrollbar);
         document.addEventListener('mousemove', this.handleHandlerMouseMove);
         document.addEventListener('mouseup', this.handleHandlerMouseUp);
         document.addEventListener('readystatechange', this.handleReadyStateChange);
         this.prepareScrollbar();
     };
     FreeScrollbar.prototype.componentWillUnmount = function () {
+        window.removeEventListener('resize', this.prepareScrollbar);
         document.removeEventListener('mousemove', this.handleHandlerMouseMove);
         document.removeEventListener('mouseup', this.handleHandlerMouseUp);
         document.removeEventListener('readystatechange', this.handleReadyStateChange);
