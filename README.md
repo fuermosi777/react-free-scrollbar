@@ -139,3 +139,5 @@ Go to `http://localhost:8080`.
 
 `$ yarn dist`
 `$ npm publish`
+
+Update changelog.

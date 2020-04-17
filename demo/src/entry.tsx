@@ -49,7 +49,7 @@ const Text = (
 
 class Root extends React.Component {
   private controlledScrollBar: FreeScrollBar | null = null;
-  private handlePositionChanged = (pos: {top?: number, left?: number}) => {
+  private handlePositionChanged = (pos: { top?: number; left?: number }) => {
     if (this.controlledScrollBar) {
       this.controlledScrollBar.setPosition(pos);
     }
@@ -119,6 +119,27 @@ class Root extends React.Component {
                     {List}
                     {List}
                     {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
+                    {List}
                   </div>
                 </FreeScrollBar>
               </div>
@@ -143,8 +164,16 @@ class Root extends React.Component {
           <div className="row">
             <div className="col-md-12">
               <h4>Control scrolling position</h4>
-              <input className="" placeholder="Top" onChange={(e) => this.handlePositionChanged({top: Number(e.target.value) || 10})}/>
-              <input className="" placeholder="Left" onChange={(e) => this.handlePositionChanged({left: Number(e.target.value) || 10})}/>
+              <input
+                className=""
+                placeholder="Top"
+                onChange={(e) => this.handlePositionChanged({ top: Number(e.target.value) || 10 })}
+              />
+              <input
+                className=""
+                placeholder="Left"
+                onChange={(e) => this.handlePositionChanged({ left: Number(e.target.value) || 10 })}
+              />
               <div className="custom-styles">
                 <FreeScrollBar
                   className="example"

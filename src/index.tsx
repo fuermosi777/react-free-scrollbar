@@ -157,7 +157,7 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
 
     let canRun = true;
 
-    return function(...args: any) {
+    return function (...args: any) {
       if (canRun) {
         canRun = false;
         func(...args);
@@ -224,7 +224,7 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
       this.el.scrollTop = start.top;
       this.el.scrollLeft = start.left;
     }
-  }
+  };
 
   private collectInfo = () => {
     this.offsetWidth = this.el.offsetWidth;
@@ -329,14 +329,14 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
   /**
    * Set the scrolling position manually.
    */
-  public setPosition = (pos: {top?: number, left?: number}) => {
+  public setPosition = (pos: { top?: number; left?: number }) => {
     if (pos.top) {
-    this.el.scrollTop = pos.top;
+      this.el.scrollTop = pos.top;
     }
     if (pos.left) {
-    this.el.scrollLeft = pos.left;
+      this.el.scrollLeft = pos.left;
     }
-  }
+  };
 
   public render() {
     // Dynamic styles
@@ -368,9 +368,16 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
       right: this.state.showVeriticalTrack ? this.props.tracksize : '0',
       opacity: this.state.hideHandler ? 0 : 1,
     };
+    // TODO: resolve the bottom issue and the horizontal handler length.
+    // TODO: convert this into the config option.
+    let min = 5;
+    let verticalHandlerHeight = Math.max(
+      100 - this.state.handlerPos.bottom - this.state.handlerPos.top,
+      min
+    );
     let verticalHandlerStyles = {
       top: this.state.handlerPos.top + '%',
-      bottom: this.state.handlerPos.bottom + '%',
+      bottom: 100 - verticalHandlerHeight - this.state.handlerPos.top + '%',
       opacity: this.state.hideHandler ? 0 : 1,
     };
     let horizontalHandlerStyles = {
@@ -378,8 +385,6 @@ export default class FreeScrollbar extends React.PureComponent<Props, State> {
       right: this.state.handlerPos.right + '%',
       opacity: this.state.hideHandler ? 0 : 1,
     };
-
-    
 
     return (
       <div
